@@ -23,29 +23,32 @@ case $2 in
 	$DEPENDENCIES)
 		if [[ -r  "${SCAFFOLD_MOD_PATH_FILE_DEPENDENCIES}" ]]
 		then
-			cat "${SCAFFOLD_MOD_PATH_FILE_DEPENDENCIES}" | dos2unix | grep -v "^[[:space:]]*$" | uniq
+			cat "${SCAFFOLD_MOD_PATH_FILE_DEPENDENCIES}" | dos2unix | sort | uniq | grep -v "^[[:space:]]*$"
 		fi
 		;;
 	$PACKAGE_EXTENSIONS)
-		cat "${SCAFFOLD_CONFIG_PATH_PACKAGE_EXTENSIONS}" | dos2unix | grep -v "^[[:space:]]*$" | uniq |tr [[:upper:]] [[:lower:]]
+		cat "${SCAFFOLD_CONFIG_PATH_PACKAGE_EXTENSIONS}" | dos2unix | sort | uniq | grep -v "^[[:space:]]*$" | tr [[:upper:]] [[:lower:]]
 		;;
 	$SYMLINK_LOCATIONS)
-		cat "${SCAFFOLD_CONFIG_PATH_SYMLINK_LOCATIONS}" | dos2unix | grep -v "^[[:space:]]*$" | uniq
+		cat "${SCAFFOLD_CONFIG_PATH_SYMLINK_LOCATIONS}" | dos2unix | sort | uniq | grep -v "^[[:space:]]*$"
 		;;
 	$GAME)
 		source "${SCAFFOLD_CONFIG_PATH_INCLUDE_MOD_CONFIGURATION}"
 		
-		printf "Searching in game location:\t%s\n\n" "$SCAFFOLD_MOD_GAME_PATH_DATA"
-		printf "Directory:\t\t\tStatus:\n"
+		readonly LINE_FORMAT="%-40s%s\n"
+		
+		printf "Game location:\t%s\n\n" "$SCAFFOLD_MOD_GAME_PATH_DATA"
+		printf $LINE_FORMAT "Directory" "Status"
+		printf "\n"
 		
 		scaffold config symlinklocations | while read LOCATION
 		do
 			PATH="${SCAFFOLD_MOD_GAME_PATH_DATA}/${LOCATION}"
 			if [[ -d "${PATH}" ]]
 			then
-				printf "%s\t\t\t%s\n" "${LOCATION}" "Ready"
+				printf "%-40s%s\n" "${LOCATION}" "Ready"
 			else
-				printf "%s\t\t\t%s\n" "${LOCATION}" "Not Ready"
+				printf "%-40s%s\n" "${LOCATION}" "Not Ready"
 			fi
 		done
 		;;
