@@ -8,8 +8,8 @@ do
 	TARGET_PATH="${SCAFFOLD_MOD_PATH_DATA}/${TARGET}"
 	LINK_PATH="${SCAFFOLD_MOD_GAME_PATH_DATA}/${TARGET}"
 	
-	CMD_TARGET_PATH=$( echo "${TARGET_PATH}" | sed 's/^\/\([[:alpha:]]*\)\//\U\1:\//g' | sed 's/\//\\/g' )
-	CMD_LINK_PATH=$( echo "${LINK_PATH}" | sed 's/^\/\([[:alpha:]]*\)\//\U\1:\//g' | sed 's/\//\\/g' )
+	CMD_TARGET_PATH=$( echo "${TARGET_PATH}" | scaffold util getwindowspath )
+	CMD_LINK_PATH=$( echo "${LINK_PATH}" | scaffold util getwindowspath )
 	
 	if [[ ! -f "${LINK_PATH}" && ! -d "${LINK_PATH}" ]]
 	then

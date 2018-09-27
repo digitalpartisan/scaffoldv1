@@ -9,7 +9,7 @@ touch "${SCAFFOLD_MOD_PATH_ACHLIST}"
 touch "${TEMP_FILE}"
 
 echo "${FIRST_LINE}" > "${TEMP_FILE}"
-scaffold packagefiles | sed 's/\//\\\\/g' | awk '{print "\t\"" $0 "\","}' >> "${TEMP_FILE}"
+scaffold packagefiles | scaffold util formatforachlist >> "${TEMP_FILE}"
 
 LAST_FILE=$( tail -1 "${TEMP_FILE}" )
 if [[ ${FIRST_LINE} == ${LAST_FILE} ]]

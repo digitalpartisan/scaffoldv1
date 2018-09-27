@@ -4,6 +4,8 @@ readonly PACKAGE_EXTENSIONS="packageextensions"
 readonly SYMLINK_LOCATIONS="symlinklocations"
 readonly GAME="game"
 
+readonly COMMANDS=( "${MOD}" "${DEPENDENCIES}" "${PACKAGE_EXTENSIONS}" "${SYMLINK_LOCATIONS}" "${GAME}")
+
 case $2 in
 	$MOD)
 		source "${SCAFFOLD_CONFIG_PATH_INCLUDE_MOD_CONFIGURATION}"
@@ -54,6 +56,6 @@ case $2 in
 		;;
 	*)
 	
-	echo "Valid configuration types are ${MOD}, ${DEPENDENCIES}, ${PACKAGE_EXTENSIONS}, ${SYMLINK_LOCATIONS}, and ${GAME}" >&2
+	echo "Valid configuration types are: ${COMMANDS[@]}" >&2
 	exit 1
 esac
