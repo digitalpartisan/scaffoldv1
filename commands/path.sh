@@ -1,1 +1,1 @@
-echo "export PATH=\"${SCAFFOLD_PATH}:\$PATH\""
+echo "export PATH=\"$SCAFFOLD_PATH:\$PATH\""
