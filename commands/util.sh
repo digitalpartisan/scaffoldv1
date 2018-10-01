@@ -5,8 +5,9 @@ readonly REMOVE_MOD_PATH="removemodpath"
 readonly REMOVE_MOD_DATA_PATH="removemoddatapath"
 readonly FORMAT_FOR_ACHLIST="formatforachlist"
 readonly PREPEND_PATH="prependpath"
+readonly DELIVER="deliver"
 
-readonly COMMANDS=( "$GET_WINDOWS_PATH" "$GET_ESCAPED_PATH" "$REMOVE_PATH" "$REMOVE_MOD_PATH" "$REMOVE_MOD_DATA_PATH" "$FORMAT_FOR_ACHLIST" "$PREPEND_PATH" )
+readonly COMMANDS=( "$GET_WINDOWS_PATH" "$GET_ESCAPED_PATH" "$REMOVE_PATH" "$REMOVE_MOD_PATH" "$REMOVE_MOD_DATA_PATH" "$FORMAT_FOR_ACHLIST" "$PREPEND_PATH" "$DELIVER" )
 
 case $2 in
 	$GET_WINDOWS_PATH)
@@ -47,6 +48,50 @@ case $2 in
 		readonly PREFIX=$( echo "$PATH_PARAMETER/" | scaffold util getescapedpath )
 		
 		exec sed "s/^/$PREFIX/g"
+		;;
+	$DELIVER)
+		source "$SCAFFOLD_CONFIG_PATH_INCLUDE_DELIVERABLE_CONFIGURATION"
+		
+		if [[ ! -d $SCAFFOLD_DELIVERABLE_PATH_TEMP_DATA ]]
+		then
+			echo "Deliverables staging data directory does not exist, cannot deliver files" >&2
+			exit 1
+		fi
+		
+		if [[ -z $3 ]]
+		then
+			readonly SOURCE_DATA_PATH="$SCAFFOLD_MODS_LOCATION/$SCAFFOLD_MOD_NAME/$SCAFFOLD_MOD_DIRECTORY_DATA"
+		else
+			readonly SOURCE_DATA_PATH="$SCAFFOLD_MODS_LOCATION/$3/$SCAFFOLD_MOD_DIRECTORY_DATA"
+		fi
+		
+		if [[ ! -d $SOURCE_DATA_PATH ]]
+		then
+			echo "Source mod data path does not exist, cannot deliver files" >&2
+			exit 1
+		fi
+		
+		while read COPY_THIS
+		do
+			SOURCE="$SOURCE_DATA_PATH/$COPY_THIS"
+			TARGET="$SCAFFOLD_DELIVERABLE_PATH_TEMP_DATA/$COPY_THIS"
+			
+			PARENT=$( dirname "$TARGET")
+			if [[ ! -d PARENT ]]
+			then
+				mkdir -p "$PARENT"
+			fi
+			
+			if [[ -f $SOURCE ]]
+			then
+				cp -f "$SOURCE" "$TARGET"
+			elif [[ -d $SOURCE ]]
+			then
+				cp -rf "$SOURCE" "$TARGET"
+			else
+				echo "Cannot deliver nonexistant path: $SOURCE" >&2
+			fi
+		done
 		;;
 	*)
 	
