@@ -11,6 +11,12 @@ do
 		then
 			COMMAND="$COMMAND | grep -v \"$SCAFFOLD_DIRECTORY_SOURCE\""
 		fi
+		
+		if [[ $MAP_DIRECTORY == $SCAFFOLD_DIRECTORY_MESHES ]]
+		then
+			COMMAND="$COMMAND | grep -v \"$SCAFFOLD_DIRECTORY_PRECOMBINED\""
+		fi
+		
 		COMMAND="$COMMAND | scaffold util prependpath \"$MAP_DIRECTORY\""
 		
 		eval $COMMAND
