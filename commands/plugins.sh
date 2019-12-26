@@ -1,16 +1,17 @@
-source "$SCAFFOLD_CONFIG_PATH_INCLUDE_MOD_CONFIGURATION"
+source "$SCAFFOLD_PATH_CONFIG_MOD"
+source "$SCAFFOLD_PATH_CONFIG_GAME"
 
-for PLUGIN_EXTENSION in "${SCAFFOLD_MOD_EXTENSIONS_PLUGIN[@]}"
+scaffold config plugin-extensions | while read PLUGIN_EXTENSION
 do
 	if [[ $RELEASING == 1 ]]
 	then
-		FILENAME="$SCAFFOLD_MOD_NAME.$PLUGIN_EXTENSION"
-		if [[ -f "$SCAFFOLD_MOD_PATH_DATA/$FILENAME" ]]
+		FILENAME="$SCAFFOLD_MOD.$PLUGIN_EXTENSION"
+		if [[ -f "$SCAFFOLD_PATH_MOD_DATA/$FILENAME" ]]
 		then
-			echo $FILENAME
+			echo "$FILENAME"
 			exit 0
 		fi
 	else
-		find "$SCAFFOLD_MOD_PATH_DATA" -type f -name "*.$PLUGIN_EXTENSION" | scaffold util removemoddatapath
+		find "$SCAFFOLD_PATH_MOD_DATA" -type f -name "*.$PLUGIN_EXTENSION" | scaffold util remove-mod-data-path
 	fi
 done

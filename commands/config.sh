@@ -20,12 +20,12 @@ case $2 in
 		printf "Game configuration:\t%s\n" "$SCAFFOLD_GAME"
 		
 		DEPENDENCY_LIST=$(scaffold config dependencies)
-		if [[ -z $DEPENDENCY_LIST ]]
+		if [[ -z "$DEPENDENCY_LIST" ]]
 		then
 			printf "Dependencies:\t\tN/A";
 		else
 			printf "Dependencies:\n"
-			echo $DEPENDENCY_LIST | while read DEPENDENCY
+			echo "$DEPENDENCY_LIST" | while read DEPENDENCY
 			do
 				printf "\t%s\n" "$DEPENDENCY"
 			done
@@ -34,42 +34,42 @@ case $2 in
 	$DEPENDENCIES)
 		source "$SCAFFOLD_PATH_CONFIG_MOD"
 		
-		if [[ -r  $SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES ]]
+		if [[ -r "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" ]]
 		then
-			cat $SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$GLOBAL_PLUGIN_EXTENSIONS)
-		if [[ -r $SCAFFOLD_PATH_CONFIG_GLOBAL_PLUGINEXTENSIONS ]]
+		if [[ -r "$SCAFFOLD_PATH_CONFIG_GLOBAL_PLUGINEXTENSIONS" ]]
 		then
-			cat $SCAFFOLD_PATH_CONFIG_GLOBAL_PLUGINEXTENSIONS | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_CONFIG_GLOBAL_PLUGINEXTENSIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$GAME_PLUGIN_EXTENSIONS)
 		source "$SCAFFOLD_PATH_CONFIG_MOD"
 		source "$SCAFFOLD_PATH_CONFIG_GAME"
 		
-		if [[ -r $SCAFFOLD_PATH_GAME_PLUGINEXTENSIONS ]]
+		if [[ -r "$SCAFFOLD_PATH_GAME_PLUGINEXTENSIONS" ]]
 		then
-			cat $SCAFFOLD_PATH_GAME_PLUGINEXTENSIONS | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_GAME_PLUGINEXTENSIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$PLUGIN_EXTENSIONS)
 		{ scaffold config global-plugin-extensions ; scaffold config game-plugin-extensions ; } | cat | uniq | sort
 		;;
 	$GLOBAL_SYMLINK_LOCATIONS)
-		if [[ -r $SCAFFOLD_PATH_CONFIG_GLOBAL_SYMLINKLOCATIONS ]]
+		if [[ -r "$SCAFFOLD_PATH_CONFIG_GLOBAL_SYMLINKLOCATIONS" ]]
 		then
-			cat $SCAFFOLD_PATH_CONFIG_GLOBAL_SYMLINKLOCATIONS | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_CONFIG_GLOBAL_SYMLINKLOCATIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$GAME_SYMLINK_LOCATIONS)
 		source "$SCAFFOLD_PATH_CONFIG_MOD"
 		source "$SCAFFOLD_PATH_CONFIG_GAME"
 		
-		if [[ -r $SCAFFOLD_PATH_GAME_SYMLINKLOCATIONS ]]
+		if [[ -r "$SCAFFOLD_PATH_GAME_SYMLINKLOCATIONS" ]]
 		then
-			cat $SCAFFOLD_PATH_GAME_SYMLINKLOCATIONS | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_GAME_SYMLINKLOCATIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$SYMLINK_LOCATIONS)
@@ -79,15 +79,15 @@ case $2 in
 		source "$SCAFFOLD_PATH_CONFIG_MOD"
 		source "$SCAFFOLD_PATH_CONFIG_GAME"
 		
-		if [[ -r $SCAFFOLD_PATH_GAME_ARCHIVEEXTENSIONS ]]
+		if [[ -r "$SCAFFOLD_PATH_GAME_ARCHIVEEXTENSIONS" ]]
 		then
-			cat $SCAFFOLD_PATH_GAME_ARCHIVEEXTENSIONS | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_GAME_ARCHIVEEXTENSIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$GLOBAL_ARCHIVE_EXTENSIONS)
-		if [[ -r $SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS ]]
+		if [[ -r "$SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS" ]]
 		then
-			cat $SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
 		fi
 		;;
 	$ARCHIVE_EXTENSIONS)
@@ -106,8 +106,8 @@ case $2 in
 		
 		scaffold config symlink-locations | while read LOCATION
 		do
-			PATH="$SCAFFOLD_MOD_GAME_PATH_DATA/$LOCATION"
-			if [[ -d $PATH ]]
+			PATH="$SCAFFOLD_PATH_GAME_DATA/$LOCATION"
+			if [[ -d "$PATH" ]]
 			then
 				printf "%-40s%s\n" "$LOCATION" Ready
 			else

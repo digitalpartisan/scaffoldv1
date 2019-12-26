@@ -45,14 +45,16 @@ case $2 in
 			echo "Path to filter cannot be empty!  Correct usage: scaffold util $PREPEND_PATH \"/your/path/here\"" >&2
 			exit 1
 		fi
-		readonly PREFIX=$( echo "$PATH_PARAMETER/" | scaffold util getescapedpath )
+		readonly PREFIX=$( echo "$PATH_PARAMETER/" | scaffold util get-escaped-path )
 		
 		exec sed "s/^/$PREFIX/g"
 		;;
 	$DELIVER)
-		source "$SCAFFOLD_CONFIG_PATH_INCLUDE_DELIVERABLE_CONFIGURATION"
+		source "$SCAFFOLD_PATH_CONFIG_MOD"
+		source "$SCAFFOLD_PATH_CONFIG_GAME"
+		source "$SCAFFOLD_PATH_CONFIG_DELIVERABLE"
 		
-		if [[ ! -d $SCAFFOLD_DELIVERABLE_PATH_TEMP_DATA ]]
+		if [[ ! -d "$SCAFFOLD_PATH_GAME_DELIVERABLE_TEMP_DATA" ]]
 		then
 			echo "Deliverables staging data directory does not exist, cannot deliver files" >&2
 			exit 1
@@ -60,12 +62,12 @@ case $2 in
 		
 		if [[ -z $3 ]]
 		then
-			readonly SOURCE_DATA_PATH="$SCAFFOLD_MODS_LOCATION/$SCAFFOLD_MOD_NAME/$SCAFFOLD_MOD_DIRECTORY_DATA"
+			readonly SOURCE_DATA_PATH="$SCAFFOLD_PATH_MOD_DATA"
 		else
-			readonly SOURCE_DATA_PATH="$SCAFFOLD_MODS_LOCATION/$3/$SCAFFOLD_MOD_DIRECTORY_DATA"
+			readonly SOURCE_DATA_PATH="$SCAFFOLD_PATH_MODS/$3/$SCAFFOLD_NAME_DIRECTORY_DATA"
 		fi
 		
-		if [[ ! -d $SOURCE_DATA_PATH ]]
+		if [[ ! -d "$SOURCE_DATA_PATH" ]]
 		then
 			echo "Source mod data path does not exist, cannot deliver files" >&2
 			exit 1
@@ -74,7 +76,7 @@ case $2 in
 		while read COPY_THIS
 		do
 			SOURCE="$SOURCE_DATA_PATH/$COPY_THIS"
-			TARGET="$SCAFFOLD_DELIVERABLE_PATH_TEMP_DATA/$COPY_THIS"
+			TARGET="$SCAFFOLD_PATH_GAME_DELIVERABLE_TEMP_DATA/$COPY_THIS"
 			
 			PARENT=$( dirname "$TARGET")
 			if [[ ! -d PARENT ]]

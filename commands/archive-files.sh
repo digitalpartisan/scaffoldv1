@@ -9,7 +9,7 @@ function findModPackageFiles() {
 	EXCLUSION_FILE="$MOD_PATH/$SCAFFOLD_PATH_RELATIVE_MOD_EXCLUSIONPATTERN"
 	
 	COMMAND="find \"$DATA_PATH\" -type f | egrep \"\\.($SCAFFOLD_PACKAGE_EXTENSIONS)\$\""
-	if [[ -r $EXCLUSION_FILE ]]
+	if [[ -r "$EXCLUSION_FILE" ]]
 	then
 		COMMAND="$COMMAND | grep -v --file=\"$EXCLUSION_FILE\""
 	fi

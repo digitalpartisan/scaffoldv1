@@ -1,11 +1,11 @@
-source "$SCAFFOLD_CONFIG_PATH_INCLUDE_MOD_CONFIGURATION"
-source "$SCAFFOLD_CONFIG_PATH_INCLUDE_GAME_CONFIGURATION"
+source "$SCAFFOLD_PATH_CONFIG_MOD"
+source "$SCAFFOLD_PATH_CONFIG_GAME"
 
 if [[ 1 == $RELEASING ]]
 then
-	scaffold packages | scaffold map
+	scaffold archives | scaffold map
 	scaffold plugins --release | scaffold map
 else
-	scaffold symlinklocations | scaffold map
+	scaffold symlink-locations | scaffold map
 	scaffold plugins | scaffold map
 fi
