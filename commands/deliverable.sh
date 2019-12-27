@@ -8,7 +8,7 @@ then
 	exit 1
 fi
 
-if [[ -d "$SCAFFOLD_PATH_DELIVERABLE_MOD" ]]
+if [[ -d "$SCAFFOLD_PATH_DELIVERABLE" ]]
 then
 	echo "Cannot build deliverable, final deliverable path already in use: $SCAFFOLD_PATH_DELIVERABLE_MOD" >&2
 	exit 1
@@ -31,4 +31,4 @@ else
 	scaffold archives | scaffold util deliver
 fi
 
-mv "$SCAFFOLD_PATH_GAME_DELIVERABLE_TEMP" "$SCAFFOLD_PATH_DELIVERABLE_MOD"
+mv "$SCAFFOLD_PATH_GAME_DELIVERABLE_TEMP" "$SCAFFOLD_DELIVERABLE_PATH"
