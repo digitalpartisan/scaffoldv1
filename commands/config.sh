@@ -55,7 +55,7 @@ case $2 in
 		fi
 		;;
 	$PLUGIN_EXTENSIONS)
-		{ scaffold config global-plugin-extensions ; scaffold config game-plugin-extensions ; } | cat | uniq | sort
+		{ scaffold config global-plugin-extensions ; scaffold config game-plugin-extensions ; } | cat | uniq | sort | tr '[:upper:]' '[:lower:]'
 		;;
 	$GLOBAL_SYMLINK_LOCATIONS)
 		if [[ -r "$SCAFFOLD_PATH_CONFIG_GLOBAL_SYMLINKLOCATIONS" ]]
@@ -87,7 +87,7 @@ case $2 in
 	$GLOBAL_ARCHIVE_EXTENSIONS)
 		if [[ -r "$SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS" ]]
 		then
-			cat "$SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_CONFIG_GLOBAL_ARCHIVEEXTENSIONS" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort | tr '[:upper:]' '[:lower:]'
 		fi
 		;;
 	$ARCHIVE_EXTENSIONS)

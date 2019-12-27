@@ -6,8 +6,9 @@ readonly REMOVE_MOD_DATA_PATH="remove-mod-data-path"
 readonly FORMAT_FOR_ACHLIST="format-for-achlist"
 readonly PREPEND_PATH="prepend-path"
 readonly DELIVER="deliver"
+readonly CAPITALIZATION_VARIANTS="capitalization-variants"
 
-readonly COMMANDS=( "$GET_WINDOWS_PATH" "$GET_ESCAPED_PATH" "$REMOVE_PATH" "$REMOVE_MOD_PATH" "$REMOVE_MOD_DATA_PATH" "$FORMAT_FOR_ACHLIST" "$PREPEND_PATH" "$DELIVER" )
+readonly COMMANDS=( "$GET_WINDOWS_PATH" "$GET_ESCAPED_PATH" "$REMOVE_PATH" "$REMOVE_MOD_PATH" "$REMOVE_MOD_DATA_PATH" "$FORMAT_FOR_ACHLIST" "$PREPEND_PATH" "$DELIVER" "$CAPITALIZATION_VARIANTS" )
 
 case $2 in
 	$GET_WINDOWS_PATH)
@@ -93,6 +94,13 @@ case $2 in
 			else
 				echo "Cannot deliver nonexistant path: $SOURCE" >&2
 			fi
+		done
+		;;
+	$CAPITALIZATION_VARIANTS)
+		while read VALUE
+		do
+			echo "$VALUE" | tr '[:upper:]' '[:lower:]'
+			echo "$VALUE" | tr '[:lower:]' '[:upper:]'
 		done
 		;;
 	*)
