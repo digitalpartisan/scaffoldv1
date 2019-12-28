@@ -36,7 +36,7 @@ case $2 in
 		
 		if [[ -r "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" ]]
 		then
-			cat "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" | dos2unix | grep -v "^[[:space:]]*$" | uniq | sort
+			cat "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" | dos2unix | grep -v "^[[:space:]]*$" | uniq
 		fi
 		;;
 	$GLOBAL_PLUGIN_EXTENSIONS)
