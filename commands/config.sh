@@ -34,9 +34,9 @@ case $2 in
 	$DEPENDENCIES)
 		source "$SCAFFOLD_PATH_CONFIG_MOD"
 		
-		if [[ -r "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" ]]
+		if [[ ! -z "$SCAFFOLD_TEMP_CONFIG_DEPENDENCIES" ]]
 		then
-			cat "$SCAFFOLD_PATH_MOD_CONFIG_DEPENDENCIES" | dos2unix | grep -v "^[[:space:]]*$" | uniq
+			echo "$SCAFFOLD_TEMP_CONFIG_DEPENDENCIES" | tr "," "\n" | uniq
 		fi
 		;;
 	$GLOBAL_PLUGIN_EXTENSIONS)
