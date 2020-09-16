@@ -1,13 +1,13 @@
-if [[ -d "$SCAFFOLD_MOD_PATH_CONFIG" ]]
+if [[ -f "$SCAFFOLD_NAME_CONFIG" ]]
 then
-	echo "Could not initialize mod location, configuration directory already present" >&2
+	echo "Could not initialize mod location, configuration file already present" >&2
 	exit 1
 fi
 
-cp -r "$SCAFFOLD_CONFIG_PATH_SAMPLE_CONFIG" "$SCAFFOLD_MOD_PATH_CONFIG"
-if [[ -f "$SCAFFOLD_MOD_PATH_CONFIG_FILE" ]]
+cp "$SCAFFOLE_PATH_FILE_CONFIG_EXAMPLE" "$SCAFFOLD_NAME_CONFIG"
+if [[ -r "$SCAFFOLD_NAME_CONFIG" ]]
 then
-	echo "Mod configuration initialized, please populate the values in the config file located at $SCAFFOLD_MOD_PATH_CONFIG_FILE"
+	echo "Mod configuration initialized, please populate the values in the config file located at $SCAFFOLD_NAME_CONFIG"
 else
 	echo "Failed to initialize this mod location, check filesystem permissions" >&2
 	exit 1
