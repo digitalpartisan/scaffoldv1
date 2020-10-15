@@ -19,6 +19,10 @@ readonly SCAFFOLD_DELIVERABLE_SEPARATOR="_"
 readonly SCAFFOLD_DIRECTORY_SCRIPTS="Scripts"
 readonly SCAFFOLD_DIRECTORY_SOURCE="Source"
 
+readonly SCAFFOLD_PAPYRUS_COMPILER="PapyrusCompiler.exe"
+readonly SCAFFOLD_PAPYRUS_FILE_BUILD="Papyrus.ppj"
+readonly SCAFFOLD_PAPYRUS_FILE_BUILD_RELEASE="PapyrusRelease.ppj"
+
 readonly SCAFFOLD_DIRECTORY_MESHES="Meshes"
 readonly SCAFFOLD_DIRECTORY_PRECOMBINED="PreCombined"
 
@@ -30,9 +34,17 @@ readonly SCAFFOLD_MOD_EXTENSIONS_PLUGIN=( $(echo "${SCAFFOLD_MOD_EXTENSION_ESM,,
 readonly SCAFFOLD_MOD_EXTENSIONS_PACKAGE=( $(echo "${SCAFFOLD_MOD_EXTENSION_PACKAGE,,}") $(echo "${SCAFFOLD_MOD_EXTENSION_PACKAGE^^}") )
 
 readonly RELEASE_FLAG="--release"
-if [[ $2 == $RELEASE_FLAG ]]
-then
-	readonly RELEASING=1
-else
-	readonly RELEASING=0
-fi
+RELEASE_VALUE=""
+readonly DEPENDENCIES_FLAG="--dependencies"
+DEPENDENCIES_VALUE=""
+
+for arg in "$@"
+do
+	case $arg in
+		"--release") RELEASE_VALUE=0 ;;
+		"--dependencies") DEPENDENCIES_VALUE=0 ;;
+	esac
+done
+
+readonly RELEASING=$RELEASE_VALUE
+readonly DEPENDENCIES=$DEPENDENCIES_VALUE

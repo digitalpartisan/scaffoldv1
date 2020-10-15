@@ -3,7 +3,7 @@ source "$SCAFFOLD_PATH_CONFIG_GAME"
 
 scaffold config plugin-extensions | while read PLUGIN_EXTENSION
 do
-	if [[ $RELEASING == 1 ]]
+	if [[ $RELEASING ]]
 	then
 		FILENAME="$SCAFFOLD_MOD.$PLUGIN_EXTENSION"
 		if [[ -f "$SCAFFOLD_PATH_MOD_DATA/$FILENAME" ]]
