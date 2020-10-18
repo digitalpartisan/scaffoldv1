@@ -16,7 +16,7 @@ fi
 
 mkdir -p "$SCAFFOLD_PATH_GAME_DELIVERABLE_TEMP_DATA"
 
-if [[ 1 == $LOOSE ]]
+if [[ $LOOSE ]]
 then
 	scaffold config dependencies | while read DEPENDENCY
 	do

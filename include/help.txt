@@ -1,0 +1,73 @@
+Usage: scaffold [command] [argument]* [--flags]*
+
+Flags:
+	--release
+	--dependencies
+	--loose
+
+Commands:
+	achlist							Creates, if needed, and populates the package.achlist file in the mod's top directory.
+									Used to quickly and reliably create package files in the Creation Kit.
+	archive-files					Used by the achlist command to locate files to list in the package manifest file.
+	archives						Lists any archive files located in the mod.  Used by other commands.
+	bounce							Runs the down and up commands on a mod to guarantee the right files and links are stood up in the game directory.
+		--dependencies				Runs this command in each of the mod's dependencies before bouncing this mod to ensure that this mod will operate correctly during development
+	config							
+		mod							Configuration data for the mod in the directory where scaffold is run.  Useful for debugging odd behavior of other commands.
+		game						Configuration data for the game specified by the mod in use.  Useful for debugging odd behavior of other commands.
+		dependencies				Used by the mod argument as well as other commands to retrieve the dependencies of a mod.
+		global-plugin-extentions	Lists all file extensions to be treated as plugins for any game regardless of the mod in use.
+		game-plugin-extensions		Lists all file extensions to be treated as plugins for the game specified by the mod in use.
+		plugin-extensions			Lists all file extensions to be treated as plugins regardless of whether or not they're a global or game-specific setting.
+									Used by other commands to determine what files should be stood up and/or delivered for release.
+		global-symlink-locations	Lists all paths to be linked from a mod into a game regardless of what game or mod is in use.
+		game-symlink-locations		Lists all paths to be linked from a mod into a game specific to the game in use.
+		symlink-locations			Lists all paths to be linked from a mod into a game regardles of whether or they're a global or game-specific setting.
+									Used by other commands to determine what files should be linked into a game's directory in order to facilitate development.
+		global-archive-extensions	Lists all file extensions to be packaged in archives for any game regardless of the mod in use.
+		game-archive-extensions		Lists all file extensions to be packaged in archives for the game specified by the mod in use.
+		archive-extensions 			Lists all file extensions to be packaged in archives regardless of whether or not they're a global or game-specific settings.
+									Used by other commands to determine what files should be packages in archives.
+	deliverable						Builds a folder ready for upload to a mod website in a game's deliverable path.  Defaults to release mode (i.e. a single plugin and archive packages only).
+		--loose						Builds a package with all plugins and loose files instead of archives.
+	deliverables					Runs deliverable and deliverable --loose
+	down							Removes all mod files from the game directory.
+									Files which are directly linked (such as plugins) have their changes copied into the mod directory when this is run.
+									Useful for making sure a mod is ready for version control operations by ensuring that all files are up-to-date with changes made in the Creation Kit.
+		--dependencies				Runs the down command on each of a mod's dependencies before downing this mod.  Useful for cleaning an entire mod stack prior to prepping for a release.
+	help							Displays this screen.
+	init 							Initializes a directory with a skeleton scaffold mod config file.
+	loose-files						Lists the directories and individual files to be copied to a deliverable location
+		<mod name>					Lists the directories and individual files of the mod specific by <mod name> without its plugins.
+									Useful for copying resources from a dependency into a loose file deliverable.
+	map	<target name>				Maps the file or directory indicated by <target name> into the game directory.  Used the up command.
+									Symlinks directories and hard links files such as plugins.
+									Note that CK modifications to a file must be brought back into a mod's directory with the down command.
+	papyrus							Compiles all Papyrus files in a mod.  Requires a Papyrus.ppj file in the mod's directory to operate.
+		--dependencies				Compiles all Papyrus files in a mod's dependencies and that mod itself.  Requires a Papyrus.ppj file in each of those mods to operate.
+		--release					Compiles all Papyrus files in a mod (and a mod's dependencies if --dependencies is specified) in release mode.
+									Requires a PapyrusRelease.ppj file in all relevant mods' directories to operate.
+	path							Outputs the location where scaffold is installed to the terminal.  Useful for adding that location to your PATH environment variable.
+	plugins							Lists a mod's plugins in the order which the deliverable command will prefer them if running in release mode.
+									Used by other commands such as up and down.
+	prep-game						Used to ensure that a game's data directory has directories ready to have a mod's directories symlinked in to them.
+									See the config symlink-locations output for details.
+									The status of each of these directories is visible via the config game command.
+	symlink-locations				Lists the files and/or directories in a mod which exist inside of directories specified by the config symlink-locations.
+									Used by other commands.
+	unmap							Takes a stream of files and/or directories inside a game's data directory which must either be copied back into a mod's directory and delete
+									or else unlinked to complete the down command's task.
+	up								Stands up the files of a mod in its game's data directory to prepare for development and/or testing.
+		--dependencies				Stands up a mod and each of its dependencies into the game's data directory.  Used to ensure that a mod will run correctly during development and/or testing.
+									Has no effect if --release is specified as well.
+		--release					Stands up a mod's release plugin and archive files in its game's data directory.  Usedful for final, pre-release testing.
+	util
+		get-windows-path			Maps a unix filesystem path to its Windows equivalent.  Used by other commands.
+		get-escaped-path			Prepares a file path for use in other commands by correctly escaping slashes.  Takes input from stdin.
+		remove-path	<path>			Takes a stream of input from stdin and removes the part of the input strings matching <path>.
+		remove-mod-path				Takes a stream of input from stdin and removes the mod's absolute path from each input string.
+		remove-mod-data-path		Takes a stream of input from stdin and removes the mod's absolute data path from each input string.
+		format-for-achlist			Takes a stream of input from stdin and formats each of the input strings for inclusion in the package.achlist file.
+		prepend-path <path>			Takes a stream of input from stdin and prepends <path> to each input string.
+		deliver <path>				Takes a stream of input from stdin and copies the files and/or directories at that location to the deliverable being built.
+		capitalization-variants		Takes a stream of input from stdin and forces a lowercase and uppercase output string for each input string.  Used by other commands to work around somewhat random Bethesda tooling output.

@@ -1,1 +1,1 @@
-echo "This is the help menu"
+cat "$SCAFFOLD_PATH_INCLUDE/help.txt"

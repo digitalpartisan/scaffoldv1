@@ -9,7 +9,7 @@ fi
 
 if [[ "$SCAFFOLD_MOD" == "$GIVEN_MOD_NAME" ]]
 then
-	readonly THISMOD=1
+	readonly THISMOD=""
 else
 	readonly THISMOD=0
 fi
@@ -40,7 +40,7 @@ do
 	fi
 done
 
-if [[ 1 == $THISMOD ]] 
+if [[ $THISMOD ]] 
 then
 	scaffold plugins
 fi

@@ -37,14 +37,18 @@ readonly RELEASE_FLAG="--release"
 RELEASE_VALUE=""
 readonly DEPENDENCIES_FLAG="--dependencies"
 DEPENDENCIES_VALUE=""
+readonly LOOSE_FLAG="--loose"
+LOOSE_VALUE=""
 
 for arg in "$@"
 do
 	case $arg in
 		"--release") RELEASE_VALUE=0 ;;
 		"--dependencies") DEPENDENCIES_VALUE=0 ;;
+		"--loose") LOOSE_VALUE=0 ;;
 	esac
 done
 
 readonly RELEASING=$RELEASE_VALUE
 readonly DEPENDENCIES=$DEPENDENCIES_VALUE
+readonly LOOSE=$LOOSE_VALUE

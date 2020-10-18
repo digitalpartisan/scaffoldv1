@@ -101,6 +101,7 @@ case $2 in
 		printf "Game:\t\t\t%s\n" "$SCAFFOLD_GAME_NAME"
 		printf "Plugin extension:\t%s\n" "$SCAFFOLD_GAME_ARCHIVE_EXTENSION"
 		printf "Location:\t\t%s\n" "$SCAFFOLD_PATH_GAME_DATA"
+		printf "Deliverable location:\t%s\n" "$SCAFFOLD_GAME_DELIVERABLE_PATH"
 		printf "$LINE_FORMAT" Directory Status
 		printf "\n"
 		
@@ -117,6 +118,6 @@ case $2 in
 		;;
 	*)
 	
-	echo "Valid configuration types are: ${COMMANDS[@]}" >&2
+	echo "Valid configuration arguments are: ${COMMANDS[@]}" >&2
 	exit 1
 esac
