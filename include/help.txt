@@ -4,6 +4,7 @@ Flags:
 	--release
 	--dependencies
 	--loose
+	--clean
 
 Commands:
 	achlist							Creates, if needed, and populates the package.achlist file in the mod's top directory.
@@ -47,6 +48,9 @@ Commands:
 		--dependencies				Compiles all Papyrus files in a mod's dependencies and that mod itself.  Requires a Papyrus.ppj file in each of those mods to operate.
 		--release					Compiles all Papyrus files in a mod (and a mod's dependencies if --dependencies is specified) in release mode.
 									Requires a PapyrusRelease.ppj file in all relevant mods' directories to operate.
+		--clean						Removes all compiled scripts inside of directories in the mod's Data/Scripts directory.
+									Does not delete compiled scripts located directly in the Data/Scripts directory since this would break the up/down behavior.
+									Avoid placing scripts in this location unless absolutely necessary.
 	path							Outputs the location where scaffold is installed to the terminal.  Useful for adding that location to your PATH environment variable.
 	plugins							Lists a mod's plugins in the order which the deliverable command will prefer them if running in release mode.
 									Used by other commands such as up and down.

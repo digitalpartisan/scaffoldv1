@@ -18,6 +18,7 @@ readonly SCAFFOLD_DELIVERABLE_SEPARATOR="_"
 
 readonly SCAFFOLD_DIRECTORY_SCRIPTS="Scripts"
 readonly SCAFFOLD_DIRECTORY_SOURCE="Source"
+readonly SCAFFOLD_DIRECTORY_USER="User"
 
 readonly SCAFFOLD_PAPYRUS_COMPILER="PapyrusCompiler.exe"
 readonly SCAFFOLD_PAPYRUS_FILE_BUILD="Papyrus.ppj"
@@ -39,6 +40,8 @@ readonly DEPENDENCIES_FLAG="--dependencies"
 DEPENDENCIES_VALUE=""
 readonly LOOSE_FLAG="--loose"
 LOOSE_VALUE=""
+readonly CLEAN_FLAG="--clean"
+CLEAN_VALUE=""
 
 for arg in "$@"
 do
@@ -46,9 +49,11 @@ do
 		"--release") RELEASE_VALUE=0 ;;
 		"--dependencies") DEPENDENCIES_VALUE=0 ;;
 		"--loose") LOOSE_VALUE=0 ;;
+		"--clean") CLEAN_VALUE=0 ;;
 	esac
 done
 
 readonly RELEASING=$RELEASE_VALUE
 readonly DEPENDENCIES=$DEPENDENCIES_VALUE
 readonly LOOSE=$LOOSE_VALUE
+readonly CLEANING=$CLEAN_VALUE
