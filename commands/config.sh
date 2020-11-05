@@ -1,5 +1,6 @@
 readonly MOD="mod"
 readonly DEPENDENCIES_OPTION="dependencies"
+readonly EXHAUSTIVE_DEPENDENCIES_OPTION="exhaustive-dependencies"
 readonly GAME="game"
 readonly PLUGIN_EXTENSIONS="plugin-extensions"
 readonly GAME_PLUGIN_EXTENSIONS="game-plugin-extensions"
@@ -38,6 +39,39 @@ case $2 in
 		then
 			echo "$SCAFFOLD_TEMP_CONFIG_DEPENDENCIES" | tr "," "\n" | uniq
 		fi
+		;;
+	$EXHAUSTIVE_DEPENDENCIES_OPTION)
+		source "$SCAFFOLD_PATH_CONFIG_MOD"
+
+		MODS_EXAMINED=( "$SCAFFOLD_MOD" ) # put the current mod here now to prevent circular dependencies
+		ALL_DEPENDENCIES=()
+		MODS_TO_EXAMINE=( $(scaffold config dependencies) )
+
+		EXAMINE_ME=${MODS_TO_EXAMINE[0]}
+		MODS_TO_EXAMINE=( "${MODS_TO_EXAMINE[@]:1}" )
+		
+		while [[ -n "$EXAMINE_ME" ]]
+		do
+			ALL_DEPENDENCIES+=( "$EXAMINE_ME" )
+			MODS_EXAMINED+=( "$EXAMINE_ME" )
+			MOD_PATH="$SCAFFOLD_PATH_MODS/$EXAMINE_ME"
+			cd "$MOD_PATH"
+
+			for DEPENDENCY in $(scaffold config dependencies)
+			do
+				if [[ ! " ${MODS_EXAMINED[@]} " =~ " $DEPENDENCY " && ! " ${MODS_TO_EXAMINE[@]} " =~ " $DEPENDENCY " ]]
+				then
+					MODS_TO_EXAMINE+=( "$DEPENDENCY" )
+				fi
+			done
+
+			EXAMINE_ME=${MODS_TO_EXAMINE[0]}
+			MODS_TO_EXAMINE=( "${MODS_TO_EXAMINE[@]:1}" )
+		done
+
+		cd "$SCAFFOLD_PATH_MOD"
+
+		echo "${ALL_DEPENDENCIES[@]}" | grep -v "^[[:space:]]*$" | tr " " "\n" | uniq # should already be unique, but paranoia is a good enough excuse
 		;;
 	$GLOBAL_PLUGIN_EXTENSIONS)
 		if [[ -r "$SCAFFOLD_PATH_CONFIG_GLOBAL_PLUGINEXTENSIONS" ]]

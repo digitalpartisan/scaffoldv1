@@ -49,7 +49,7 @@ fi
 if [[ $DEPENDENCIES ]]
 then
 	echo "Compiling dependencies"
-	scaffold config dependencies | while read DEPENDENCY
+	scaffold config exhaustive-dependencies | while read DEPENDENCY
 	do
 		buildPapyrus "$DEPENDENCY"
 	done

@@ -22,12 +22,10 @@ else
 	if [[ $DEPENDENCIES ]]
 	then
 		echo "Upping dependencies"
-		scaffold config dependencies | while read DEPENDENCY
+		{ scaffold config exhaustive-dependencies; echo "$SCAFFOLD_MOD"; } | while read DEPENDENCY
 		do
 			upDependency "$DEPENDENCY"
 		done
-
-		upDependency "$SCAFFOLD_MOD"
 
 		echo "`date +%H:%M:%S` - Done"
 	else

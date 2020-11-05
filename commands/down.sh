@@ -17,12 +17,10 @@ function downDependency() {
 if [[ $DEPENDENCIES ]]
 then
 	echo "Downing dependencies"
-	scaffold config dependencies | while read DEPENDENCY
+	{ scaffold config exhaustive-dependencies; echo "$SCAFFOLD_MOD"; } | while read DEPENDENCY
 	do
 		downDependency "$DEPENDENCY"
 	done
-
-	downDependency "$SCAFFOLD_MOD"
 
 	echo "`date +%H:%M:%S` - Done"
 else

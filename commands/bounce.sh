@@ -17,12 +17,10 @@ function bounceDependency() {
 if [[ $DEPENDENCIES ]]
 then
 	echo "Bouncing dependencies"
-	scaffold config dependencies | while read DEPENDENCY
+	{ scaffold config exhaustive-dependencies; echo "$SCAFFOLD_MOD"; } | while read DEPENDENCY
 	do
 		bounceDependency "$DEPENDENCY"
 	done
-
-	bounceDependency "$SCAFFOLD_MOD"
 
 	echo "`date +%H:%M:%S` - Done"
 else

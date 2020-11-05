@@ -17,6 +17,8 @@ Commands:
 		mod							Configuration data for the mod in the directory where scaffold is run.  Useful for debugging odd behavior of other commands.
 		game						Configuration data for the game specified by the mod in use.  Useful for debugging odd behavior of other commands.
 		dependencies				Used by the mod argument as well as other commands to retrieve the dependencies of a mod.
+		exhaustive-dependencies		Executes a recursive search on a mod's dependencies to produce an exhaustive, though unique list of a mod's dependency tree.
+									Used by other commands to determine mods that might be required to develop the mod in question even if they're not an explicit dependency.
 		global-plugin-extentions	Lists all file extensions to be treated as plugins for any game regardless of the mod in use.
 		game-plugin-extensions		Lists all file extensions to be treated as plugins for the game specified by the mod in use.
 		plugin-extensions			Lists all file extensions to be treated as plugins regardless of whether or not they're a global or game-specific setting.
@@ -35,7 +37,7 @@ Commands:
 	down							Removes all mod files from the game directory.
 									Files which are directly linked (such as plugins) have their changes copied into the mod directory when this is run.
 									Useful for making sure a mod is ready for version control operations by ensuring that all files are up-to-date with changes made in the Creation Kit.
-		--dependencies				Runs the down command on each of a mod's dependencies before downing this mod.  Useful for cleaning an entire mod stack prior to prepping for a release.
+		--dependencies				Runs the down command on each of a mod's exhaustive dependencies before downing this mod.  Useful for cleaning an entire mod stack prior to prepping for a release.
 	help							Displays this screen.
 	init 							Initializes a directory with a skeleton scaffold mod config file.
 	loose-files						Lists the directories and individual files to be copied to a deliverable location
@@ -45,7 +47,7 @@ Commands:
 									Symlinks directories and hard links files such as plugins.
 									Note that CK modifications to a file must be brought back into a mod's directory with the down command.
 	papyrus							Compiles all Papyrus files in a mod.  Requires a Papyrus.ppj file in the mod's directory to operate.
-		--dependencies				Compiles all Papyrus files in a mod's dependencies and that mod itself.  Requires a Papyrus.ppj file in each of those mods to operate.
+		--dependencies				Compiles all Papyrus files in a mod's exhaustive dependencies and that mod itself.  Requires a Papyrus.ppj file in each of those mods to operate.
 		--release					Compiles all Papyrus files in a mod (and a mod's dependencies if --dependencies is specified) in release mode.
 									Requires a PapyrusRelease.ppj file in all relevant mods' directories to operate.
 		--clean						Removes all compiled scripts inside of directories in the mod's Data/Scripts directory.
@@ -62,7 +64,7 @@ Commands:
 	unmap							Takes a stream of files and/or directories inside a game's data directory which must either be copied back into a mod's directory and delete
 									or else unlinked to complete the down command's task.
 	up								Stands up the files of a mod in its game's data directory to prepare for development and/or testing.
-		--dependencies				Stands up a mod and each of its dependencies into the game's data directory.  Used to ensure that a mod will run correctly during development and/or testing.
+		--dependencies				Stands up a mod and each of its exhaustive dependencies into the game's data directory.  Used to ensure that a mod will run correctly during development and/or testing.
 									Has no effect if --release is specified as well.
 		--release					Stands up a mod's release plugin and archive files in its game's data directory.  Usedful for final, pre-release testing.
 	util
