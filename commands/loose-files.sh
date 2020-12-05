@@ -9,9 +9,9 @@ fi
 
 if [[ "$SCAFFOLD_MOD" == "$GIVEN_MOD_NAME" ]]
 then
-	readonly THISMOD=""
-else
 	readonly THISMOD=0
+else
+	readonly THISMOD=""
 fi
 
 readonly MOD_PATH="$SCAFFOLD_PATH_MODS/$GIVEN_MOD_NAME"
